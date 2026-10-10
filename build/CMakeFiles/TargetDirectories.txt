@@ -1,0 +1,3 @@
+/home/praful/TRIGGER/build/CMakeFiles/trigger.dir
+/home/praful/TRIGGER/build/CMakeFiles/edit_cache.dir
+/home/praful/TRIGGER/build/CMakeFiles/rebuild_cache.dir
