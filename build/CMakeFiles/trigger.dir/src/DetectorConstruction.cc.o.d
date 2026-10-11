@@ -334,4 +334,11 @@ CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o: \
  /opt/geant4/include/Geant4/G4NistMaterialBuilder.hh \
  /opt/geant4/include/Geant4/G4Pow.hh /opt/geant4/include/Geant4/G4Exp.hh \
  /opt/geant4/include/Geant4/G4ThreeVector.hh \
- /opt/geant4/include/Geant4/G4SystemOfUnits.hh
+ /opt/geant4/include/Geant4/G4SystemOfUnits.hh \
+ /opt/geant4/include/Geant4/G4VisAttributes.hh \
+ /opt/geant4/include/Geant4/graphics_reps_defs.hh \
+ /opt/geant4/include/Geant4/G4Colour.hh \
+ /opt/geant4/include/Geant4/G4Color.hh \
+ /opt/geant4/include/Geant4/G4VisAttributes.icc \
+ /opt/geant4/include/Geant4/G4Colour.hh \
+ /opt/geant4/include/Geant4/G4MaterialPropertiesTable.hh

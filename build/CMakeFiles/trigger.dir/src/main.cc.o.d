@@ -647,4 +647,6 @@ CMakeFiles/trigger.dir/src/main.cc.o: /home/praful/TRIGGER/src/main.cc \
  /opt/geant4/include/Geant4/G4UImanager.hh \
  /opt/geant4/include/Geant4/G4UIsession.hh \
  /opt/geant4/include/Geant4/G4coutDestination.hh \
- /opt/geant4/include/Geant4/G4UIbatch.hh
+ /opt/geant4/include/Geant4/G4UIbatch.hh \
+ /opt/geant4/include/Geant4/G4OpticalPhysics.hh \
+ /opt/geant4/include/Geant4/G4OpticalParameters.hh

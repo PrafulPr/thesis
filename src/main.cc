@@ -6,13 +6,18 @@
 #include "G4UIExecutive.hh"
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
+#include "G4OpticalPhysics.hh"  //for #optical physics... since we are adding photons during scintillation
 
 int main(int argc, char** argv)
 {
     auto runManager = new G4RunManager();
 
     runManager->SetUserInitialization(new DetectorConstruction());
-    runManager->SetUserInitialization(new FTFP_BERT());
+    // runManager->SetUserInitialization(new FTFP_BERT());
+    //removed above line whilst adding #optical physics, replaced with below line
+    auto physicsList = new FTFP_BERT();
+    physicsList->RegisterPhysics(new G4OpticalPhysics());
+    runManager->SetUserInitialization(physicsList);
     runManager->SetUserAction(new PrimaryGeneratorAction());
 
     auto visManager = new G4VisExecutive();

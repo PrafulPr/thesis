@@ -7,19 +7,24 @@
 #include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
 
-PrimaryGeneratorAction::PrimaryGeneratorAction()
+PrimaryGeneratorAction::PrimaryGeneratorAction() //CREATE GUN?
 {
     fParticleGun = new G4ParticleGun(1);
 
     fParticleGun->SetParticleDefinition(G4Gamma::GammaDefinition());
-    fParticleGun->SetParticleEnergy(1*MeV);
+    //          CHOOSE GAMMA as the particle /\ and /\ defines gamma...
+    //                            ...based on what GEANT4 defines it as
+    fParticleGun->SetParticleEnergy(1*MeV); 
+    //SETS THE GAMMA'S ENERGY
     fParticleGun->SetParticlePosition(G4ThreeVector(0, 0, -40*cm));
+    // This sets the firing position
     fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0, 0, 1));
+    // Makes gamma travel along defined axis as per (x, y, z) values 
 }
 
-PrimaryGeneratorAction::~PrimaryGeneratorAction()
+PrimaryGeneratorAction::~PrimaryGeneratorAction() //DESTROY GUN?
 {
-    delete fParticleGun;
+    delete fParticleGun;       //deletes the gun 
 }
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
