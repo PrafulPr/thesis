@@ -44,7 +44,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 //============================================================================================================================
     // Teaching values: replace with documented crystal properties later.
     // All arrays have 3 entries, matched by position.
-    // Photon energies MUST increase; update arrays and counts together.
     G4double photonEnergy[]     = {2.0*eV, 2.5*eV, 3.0*eV};
     G4double emission[]         = {0.0, 1.0, 0.0}; // Relative intensity at each energy
     G4double crystalIndex[]     = {1.8, 1.8, 1.8}; // Refractive index at each energy

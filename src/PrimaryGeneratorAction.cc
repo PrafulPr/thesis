@@ -14,7 +14,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction() //CREATE GUN?
     fParticleGun->SetParticleDefinition(G4Gamma::GammaDefinition());
     //          CHOOSE GAMMA as the particle /\ and /\ defines gamma...
     //                            ...based on what GEANT4 defines it as
-    fParticleGun->SetParticleEnergy(1*MeV); 
+    fParticleGun->SetParticleEnergy(0.14*MeV);               //------ENERGY OF THE GAMMA RAY SHOT - edit here to CHANGE (1MeV = 1000keV)
     //SETS THE GAMMA'S ENERGY
     fParticleGun->SetParticlePosition(G4ThreeVector(0, 0, -40*cm));
     // This sets the firing position

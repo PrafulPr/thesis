@@ -931,6 +931,8 @@ CMakeFiles/trigger.dir/src/main.cc.o: /home/praful/TRIGGER/src/main.cc \
   /opt/geant4/include/Geant4/G4OpenGLQt.hh \
   /opt/geant4/include/Geant4/G4OpenGLStoredQt.hh \
   /opt/geant4/include/Geant4/G4OpenGLStoredX.hh \
+  /opt/geant4/include/Geant4/G4OpticalParameters.hh \
+  /opt/geant4/include/Geant4/G4OpticalPhysics.hh \
   /opt/geant4/include/Geant4/G4Orb.hh \
   /opt/geant4/include/Geant4/G4Orb.icc \
   /opt/geant4/include/Geant4/G4OrderedTable.hh \
@@ -1676,6 +1678,8 @@ CMakeFiles/trigger.dir/src/main.cc.o: /home/praful/TRIGGER/src/main.cc \
 /opt/geant4/include/Geant4/G4Para.icc:
 
 /opt/geant4/include/Geant4/G4Para.hh:
+
+/opt/geant4/include/Geant4/G4OpticalPhysics.hh:
 
 /opt/geant4/include/Geant4/G4OpenGLQt.hh:
 
@@ -2672,6 +2676,8 @@ CMakeFiles/trigger.dir/src/main.cc.o: /home/praful/TRIGGER/src/main.cc \
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
+
+/opt/geant4/include/Geant4/G4OpticalParameters.hh:
 
 /usr/include/c++/13/bits/predefined_ops.h:
 
