@@ -8,7 +8,11 @@
 #include "G4SystemOfUnits.hh"
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
-#include "G4MaterialPropertiesTable.hh" //since we're adding #optical properties 
+#include "G4MaterialPropertiesTable.hh" //since we're adding #2 optical properties 
+        //REMOVED WHEN I WAS SEPARATING THE SIPM ARRAY OUT   #include "G4OpticalSurface.hh"          //THIS AND #3
+        //REMOVED, SAME REASON AS ABOVE                      #include "G4LogicalBorderSurface.hh"    //THIS for #3 SiPM addition
+        //INSTEAD we have \/ 
+#include "SiPMArray.hh"   //the separated part...
 
 //SETTING THE WORLD 
 G4VPhysicalVolume* DetectorConstruction::Construct()
@@ -41,13 +45,16 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
         G4NistManager::Instance()->FindOrBuildMaterial(
             "G4_CESIUM_IODIDE"
         );
+
+
+
 //============================================================================================================================
-    // Teaching values: replace with documented crystal properties later.
-    // All arrays have 3 entries, matched by position.
-    G4double photonEnergy[]     = {2.0*eV, 2.5*eV, 3.0*eV};
-    G4double emission[]         = {0.0, 1.0, 0.0}; // Relative intensity at each energy
-    G4double crystalIndex[]     = {1.8, 1.8, 1.8}; // Refractive index at each energy
-    G4double absorptionLength[] = {1*m, 1*m, 1*m}; // Mean distance before absorption
+    // Teaching values: replace with documented crystal properties later.                                                    
+    // All arrays have 3 entries, matched by position.                                                                       
+    G4double photonEnergy[]     = {2.0*eV, 2.25*eV, 2.5*eV};
+    G4double emission[]         = {0.2, 1.0, 0.2};                               // Relative intensity at each energy
+    G4double crystalIndex[]     = {1.79, 1.79, 1.79};                            // Refractive index at each energy
+    G4double absorptionLength[] = {1*m, 1*m, 1*m};                               // Mean distance before absorption
 
     auto crystalProperties = new G4MaterialPropertiesTable();
 
@@ -57,10 +64,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     crystalProperties->AddProperty("ABSLENGTH", photonEnergy, absorptionLength, 3);
 
     // Properties independent of photon energy
-    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 1000.0/MeV); // Mean photons per MeV deposited
-    crystalProperties->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 10*ns); // Emission decay time
-    crystalProperties->AddConstProperty("SCINTILLATIONYIELD1", 1.0); // Fraction in component 1: all light
-    crystalProperties->AddConstProperty("RESOLUTIONSCALE", 1.0); // Photon-count fluctuation scale
+    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 54000.0/MeV);      // Mean photons per MeV deposited
+    crystalProperties->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 1000*ns);  // Emission decay time
+    crystalProperties->AddConstProperty("SCINTILLATIONYIELD1", 1.0);             // Fraction in component 1: all light
+    crystalProperties->AddConstProperty("RESOLUTIONSCALE", 1.0);                 // Photon-count fluctuation scale
 
     crystalMaterial->SetMaterialPropertiesTable(crystalProperties);
 
@@ -71,6 +78,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     material->SetMaterialPropertiesTable(worldProperties);
 
 //============================================================================================================================
+
+
+
     // Defining its Shape: a 2 cm cube (G4Box takes half-lengths)
     auto crystalSolid =
         new G4Box("Crystal", 8*cm, 8*cm, 4*cm);
@@ -103,6 +113,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     crystalAppearance->SetForceWireframe(true);
     crystalLogical->SetVisAttributes(crystalAppearance);
+    
+    BuildSiPMArray(logical, crystalSolid, photonEnergy);
 
     return physical;
 }

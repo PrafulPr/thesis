@@ -341,4 +341,6 @@ CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o: \
  /opt/geant4/include/Geant4/G4Color.hh \
  /opt/geant4/include/Geant4/G4VisAttributes.icc \
  /opt/geant4/include/Geant4/G4Colour.hh \
- /opt/geant4/include/Geant4/G4MaterialPropertiesTable.hh
+ /opt/geant4/include/Geant4/G4MaterialPropertiesTable.hh \
+ /home/praful/TRIGGER/include/SiPMArray.hh \
+ /opt/geant4/include/Geant4/globals.hh

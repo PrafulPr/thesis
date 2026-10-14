@@ -177,6 +177,30 @@ src/PrimaryGeneratorAction.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.s
 .PHONY : src/PrimaryGeneratorAction.cc.s
 
+src/SiPMArray.o: src/SiPMArray.cc.o
+.PHONY : src/SiPMArray.o
+
+# target to build an object file
+src/SiPMArray.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/SiPMArray.cc.o
+.PHONY : src/SiPMArray.cc.o
+
+src/SiPMArray.i: src/SiPMArray.cc.i
+.PHONY : src/SiPMArray.i
+
+# target to preprocess a source file
+src/SiPMArray.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/SiPMArray.cc.i
+.PHONY : src/SiPMArray.cc.i
+
+src/SiPMArray.s: src/SiPMArray.cc.s
+.PHONY : src/SiPMArray.s
+
+# target to generate assembly for a file
+src/SiPMArray.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/SiPMArray.cc.s
+.PHONY : src/SiPMArray.cc.s
+
 src/main.o: src/main.cc.o
 .PHONY : src/main.o
 
@@ -216,6 +240,9 @@ help:
 	@echo "... src/PrimaryGeneratorAction.o"
 	@echo "... src/PrimaryGeneratorAction.i"
 	@echo "... src/PrimaryGeneratorAction.s"
+	@echo "... src/SiPMArray.o"
+	@echo "... src/SiPMArray.i"
+	@echo "... src/SiPMArray.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

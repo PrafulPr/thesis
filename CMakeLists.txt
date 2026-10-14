@@ -7,6 +7,7 @@ add_executable(trigger
     src/main.cc
     src/DetectorConstruction.cc
     src/PrimaryGeneratorAction.cc
+    src/SiPMArray.cc    #Since we moved the SiPM array out (separate)
 )
 
 target_include_directories(trigger PRIVATE include)

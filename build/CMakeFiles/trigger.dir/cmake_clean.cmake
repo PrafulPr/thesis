@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o.d"
   "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o"
   "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o.d"
+  "CMakeFiles/trigger.dir/src/SiPMArray.cc.o"
+  "CMakeFiles/trigger.dir/src/SiPMArray.cc.o.d"
   "CMakeFiles/trigger.dir/src/main.cc.o"
   "CMakeFiles/trigger.dir/src/main.cc.o.d"
   "trigger"
