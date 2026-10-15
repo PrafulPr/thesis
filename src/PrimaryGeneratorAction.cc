@@ -6,6 +6,10 @@
 #include "G4Event.hh"
 #include "G4ThreeVector.hh"
 #include "G4SystemOfUnits.hh"
+//for randomised gamma rays in a specific direction...\/
+#include "Randomize.hh"
+#include "G4PhysicalConstants.hh"
+#include <cmath>
 
 PrimaryGeneratorAction::PrimaryGeneratorAction() //CREATE GUN?
 {
@@ -27,7 +31,34 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction() //DESTROY GUN?
     delete fParticleGun;       //deletes the gun 
 }
 
+// ============= BACK WHEN GAMMA WAS SHOT ONLY IN STRAIGHT LINES ================|
+// void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)                |
+// {                                                                             |
+//     fParticleGun->GeneratePrimaryVertex(event);                               |
+// }                                                                             |
+// ==============================================================================|
+
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 {
+    // Maximum angle away from +z.
+    const G4double halfAngle = 10*deg;
+
+    // Sample uniformly over the cone's solid angle.
+    const G4double cosTheta =
+        1.0 - G4UniformRand()*(1.0 - std::cos(halfAngle));
+
+    const G4double sinTheta =
+        std::sqrt(1.0 - cosTheta*cosTheta);
+
+    // Random rotation around the z-axis.
+    const G4double phi = twopi*G4UniformRand();
+
+    const G4ThreeVector direction(
+        sinTheta*std::cos(phi),
+        sinTheta*std::sin(phi),
+        cosTheta
+    );
+
+    fParticleGun->SetParticleMomentumDirection(direction);
     fParticleGun->GeneratePrimaryVertex(event);
 }

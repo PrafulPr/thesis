@@ -129,6 +129,30 @@ trigger/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/build
 .PHONY : trigger/fast
 
+src/Collimator.o: src/Collimator.cc.o
+.PHONY : src/Collimator.o
+
+# target to build an object file
+src/Collimator.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/Collimator.cc.o
+.PHONY : src/Collimator.cc.o
+
+src/Collimator.i: src/Collimator.cc.i
+.PHONY : src/Collimator.i
+
+# target to preprocess a source file
+src/Collimator.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/Collimator.cc.i
+.PHONY : src/Collimator.cc.i
+
+src/Collimator.s: src/Collimator.cc.s
+.PHONY : src/Collimator.s
+
+# target to generate assembly for a file
+src/Collimator.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/Collimator.cc.s
+.PHONY : src/Collimator.cc.s
+
 src/DetectorConstruction.o: src/DetectorConstruction.cc.o
 .PHONY : src/DetectorConstruction.o
 
@@ -234,6 +258,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... trigger"
+	@echo "... src/Collimator.o"
+	@echo "... src/Collimator.i"
+	@echo "... src/Collimator.s"
 	@echo "... src/DetectorConstruction.o"
 	@echo "... src/DetectorConstruction.i"
 	@echo "... src/DetectorConstruction.s"

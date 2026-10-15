@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/trigger.dir/src/Collimator.cc.o"
+  "CMakeFiles/trigger.dir/src/Collimator.cc.o.d"
   "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o"
   "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o.d"
   "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o"

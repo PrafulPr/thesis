@@ -13,4 +13,4 @@
 /vis/scene/endOfEventAction accumulate
 
 /random/setSeeds 12345 67890
-#/run/beamOn 1
+#/run/beamOn 1src/SiPMArray.cc
