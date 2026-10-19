@@ -153,6 +153,30 @@ src/Collimator.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/Collimator.cc.s
 .PHONY : src/Collimator.cc.s
 
+src/CrystalWrapping.o: src/CrystalWrapping.cc.o
+.PHONY : src/CrystalWrapping.o
+
+# target to build an object file
+src/CrystalWrapping.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o
+.PHONY : src/CrystalWrapping.cc.o
+
+src/CrystalWrapping.i: src/CrystalWrapping.cc.i
+.PHONY : src/CrystalWrapping.i
+
+# target to preprocess a source file
+src/CrystalWrapping.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/CrystalWrapping.cc.i
+.PHONY : src/CrystalWrapping.cc.i
+
+src/CrystalWrapping.s: src/CrystalWrapping.cc.s
+.PHONY : src/CrystalWrapping.s
+
+# target to generate assembly for a file
+src/CrystalWrapping.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/CrystalWrapping.cc.s
+.PHONY : src/CrystalWrapping.cc.s
+
 src/DetectorConstruction.o: src/DetectorConstruction.cc.o
 .PHONY : src/DetectorConstruction.o
 
@@ -176,6 +200,30 @@ src/DetectorConstruction.s: src/DetectorConstruction.cc.s
 src/DetectorConstruction.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/DetectorConstruction.cc.s
 .PHONY : src/DetectorConstruction.cc.s
+
+src/EventAction.o: src/EventAction.cc.o
+.PHONY : src/EventAction.o
+
+# target to build an object file
+src/EventAction.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/EventAction.cc.o
+.PHONY : src/EventAction.cc.o
+
+src/EventAction.i: src/EventAction.cc.i
+.PHONY : src/EventAction.i
+
+# target to preprocess a source file
+src/EventAction.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/EventAction.cc.i
+.PHONY : src/EventAction.cc.i
+
+src/EventAction.s: src/EventAction.cc.s
+.PHONY : src/EventAction.s
+
+# target to generate assembly for a file
+src/EventAction.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/EventAction.cc.s
+.PHONY : src/EventAction.cc.s
 
 src/PrimaryGeneratorAction.o: src/PrimaryGeneratorAction.cc.o
 .PHONY : src/PrimaryGeneratorAction.o
@@ -225,6 +273,30 @@ src/SiPMArray.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/SiPMArray.cc.s
 .PHONY : src/SiPMArray.cc.s
 
+src/SteppingAction.o: src/SteppingAction.cc.o
+.PHONY : src/SteppingAction.o
+
+# target to build an object file
+src/SteppingAction.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/SteppingAction.cc.o
+.PHONY : src/SteppingAction.cc.o
+
+src/SteppingAction.i: src/SteppingAction.cc.i
+.PHONY : src/SteppingAction.i
+
+# target to preprocess a source file
+src/SteppingAction.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/SteppingAction.cc.i
+.PHONY : src/SteppingAction.cc.i
+
+src/SteppingAction.s: src/SteppingAction.cc.s
+.PHONY : src/SteppingAction.s
+
+# target to generate assembly for a file
+src/SteppingAction.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/SteppingAction.cc.s
+.PHONY : src/SteppingAction.cc.s
+
 src/main.o: src/main.cc.o
 .PHONY : src/main.o
 
@@ -261,15 +333,24 @@ help:
 	@echo "... src/Collimator.o"
 	@echo "... src/Collimator.i"
 	@echo "... src/Collimator.s"
+	@echo "... src/CrystalWrapping.o"
+	@echo "... src/CrystalWrapping.i"
+	@echo "... src/CrystalWrapping.s"
 	@echo "... src/DetectorConstruction.o"
 	@echo "... src/DetectorConstruction.i"
 	@echo "... src/DetectorConstruction.s"
+	@echo "... src/EventAction.o"
+	@echo "... src/EventAction.i"
+	@echo "... src/EventAction.s"
 	@echo "... src/PrimaryGeneratorAction.o"
 	@echo "... src/PrimaryGeneratorAction.i"
 	@echo "... src/PrimaryGeneratorAction.s"
 	@echo "... src/SiPMArray.o"
 	@echo "... src/SiPMArray.i"
 	@echo "... src/SiPMArray.s"
+	@echo "... src/SteppingAction.o"
+	@echo "... src/SteppingAction.i"
+	@echo "... src/SteppingAction.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

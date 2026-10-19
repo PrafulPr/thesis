@@ -9,9 +9,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/praful/TRIGGER/src/Collimator.cc" "CMakeFiles/trigger.dir/src/Collimator.cc.o" "gcc" "CMakeFiles/trigger.dir/src/Collimator.cc.o.d"
+  "/home/praful/TRIGGER/src/CrystalWrapping.cc" "CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o" "gcc" "CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o.d"
   "/home/praful/TRIGGER/src/DetectorConstruction.cc" "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o.d"
+  "/home/praful/TRIGGER/src/EventAction.cc" "CMakeFiles/trigger.dir/src/EventAction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/EventAction.cc.o.d"
   "/home/praful/TRIGGER/src/PrimaryGeneratorAction.cc" "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o.d"
   "/home/praful/TRIGGER/src/SiPMArray.cc" "CMakeFiles/trigger.dir/src/SiPMArray.cc.o" "gcc" "CMakeFiles/trigger.dir/src/SiPMArray.cc.o.d"
+  "/home/praful/TRIGGER/src/SteppingAction.cc" "CMakeFiles/trigger.dir/src/SteppingAction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/SteppingAction.cc.o.d"
   "/home/praful/TRIGGER/src/main.cc" "CMakeFiles/trigger.dir/src/main.cc.o" "gcc" "CMakeFiles/trigger.dir/src/main.cc.o.d"
   )
 

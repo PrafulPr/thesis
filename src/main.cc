@@ -8,6 +8,9 @@
 #include "G4VisExecutive.hh"
 #include "G4OpticalPhysics.hh"  //for #optical physics... since we are adding photons during scintillation
 
+#include "EventAction.hh"       //for stepping action.. 'pre and post step'
+#include "SteppingAction.hh"    //for stepping action.. 'pre and post step'
+
 int main(int argc, char** argv)
 {
     auto runManager = new G4RunManager();
@@ -19,6 +22,14 @@ int main(int argc, char** argv)
     physicsList->RegisterPhysics(new G4OpticalPhysics());
     runManager->SetUserInitialization(physicsList);
     runManager->SetUserAction(new PrimaryGeneratorAction());
+    
+//________________________________________________________________
+//_________________________STEPPING ACTION________________________|
+    auto eventAction = new EventAction();                       //|
+                                                                //|
+    runManager->SetUserAction(eventAction);                     //|
+    runManager->SetUserAction(new SteppingAction(eventAction)); //|
+//________________________________________________________________|
 
     auto visManager = new G4VisExecutive();
     visManager->Initialize();

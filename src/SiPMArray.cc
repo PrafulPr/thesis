@@ -27,16 +27,13 @@ void BuildSiPMArray(
     //                                                                                                                                             |
     const G4int rows = 4;                                                                //NUMBER OF SENSORS-    ROWS                              |
     const G4int columns = 4;                                                             //NUMBER OF SENSORS-   COLUMNS                            |
-    const G4double sensorWidth = 38*mm;                                                  //SENSOR WIDTH            X                               |
-    const G4double sensorHeight = 38*mm;                                                 //SENSOR HEIGHT           Y                               |
-    const G4double sensorThickness = 0.5*mm;                                             //SENSOR THICKNESS        Z                               |
+    const G4double sensorWidth = 40*mm;                                                  //SENSOR WIDTH            X                               |
+    const G4double sensorHeight = 40*mm;                                                 //SENSOR HEIGHT           Y                               |
+    const G4double sensorThickness = 4*mm;                                             //SENSOR THICKNESS        Z                               |
     // Centre-to-centre separation                                                                                                                 |
     const G4double pitchX = 40*mm;                                                       //CENTRE TO CENTRE DISTANCE X                             |
     const G4double pitchY = 40*mm;                                                       //CENTRE TO CENTRE DISTANCE Y                             |
-    //                                                                                                                                             |
-    // Effective optical coupling layer thickness.                                                                                                 |
-    const G4double couplingThickness = 0.5*mm;                                           //THICKNESS OF OPTICAL COUPLING LAYER                     |
-    // Move the coupling layer and array together in x/y. Keep zero initially so they cover the crystal rear face.                                 |        
+    //                                                                                                                                             |                            |        
     const G4double arrayOffsetX = 0*mm;                                                  //X OFFSET                                                |
     const G4double arrayOffsetY = 0*mm;                                                  //Y OFFSET                                                |
     //                                                                                                                                             |
@@ -46,71 +43,89 @@ void BuildSiPMArray(
     const G4double crystalRearZ =                                                                                                                //|
         crystalCentreZ + crystalSolid->GetZHalfLength();                                                                                         //|
                                                                                                                                                  //|
-    // ENSURES THAT Coupling touches the crystal; sensors touch the coupling layer.                                                              //|
-    const G4double couplingCentreZ =                                                                                                             //|
-        crystalRearZ + couplingThickness/2;                                                                                                      //|
+    //ensures SENSOR TOUCHES CRYSTAL:                                                                                                            //|
     const G4double sensorCentreZ =                                                                                                               //|
-        crystalRearZ + couplingThickness + sensorThickness/2;                                                                                    //|
+        crystalRearZ + sensorThickness/2;                                                                                                        //|
                                                                                                                                                  //|
     //=============================================================================================================================================|
 
+    
 
+//________________________________________________ DELETED    ||  OPTICAL  COUPLING  ||    DELETED________________________________________________
+    // // ================================================================================================= //    
+    // // =========================== EFFECTIVE OPTICAL COUPLING MATERIAL ================================= //
+    // // ================================ DELETED OPTICAL COUPLING ======================================= //
+    // // ================================================================================================= //
 
-    // ================================================================================================= //    
-    // =========================== EFFECTIVE OPTICAL COUPLING MATERIAL ================================= //
-    // ================================================================================================= //
+    // auto couplingMaterial =
+    //     G4NistManager::Instance()->FindOrBuildMaterial("G4_PLEXIGLASS"); //MATERIAL FOR OPTICAL COUPLING
 
-    auto couplingMaterial =
-        G4NistManager::Instance()->FindOrBuildMaterial("G4_PLEXIGLASS"); //MATERIAL FOR OPTICAL COUPLING
+    // // Assumed data, change for accurate values later:
+    // G4double couplingIndex[] = {1.50, 1.50, 1.50};                       //HOW COUPLING MATERIAL AFFECTS PHOTONS
+    // G4double couplingAbsorption[] = {1*m, 1*m, 1*m};                     // same...
 
-    // Assumed data, change for accurate values later:
-    G4double couplingIndex[] = {1.50, 1.50, 1.50};                       //HOW COUPLING MATERIAL AFFECTS PHOTONS
-    G4double couplingAbsorption[] = {1*m, 1*m, 1*m};                     // same...
+    // //______________________________________________________________________________________________________________________
+    // //PUT PROPERTIES INTO TABLE                                            !!! PUT PROPERTIES INTO TABLE !!!              //|             
+    // auto couplingProperties = new G4MaterialPropertiesTable();                                                            //|
+    // couplingProperties->AddProperty(                                                                                      //|
+    //     "RINDEX", photonEnergy, couplingIndex, 3);                                                                        //|
+    // couplingProperties->AddProperty(                                                                                      //|
+    //     "ABSLENGTH", photonEnergy, couplingAbsorption, 3);                                                                //|
+    //                                                                                                                       //|
+    // couplingMaterial->SetMaterialPropertiesTable(couplingProperties); //ATTACH table data/parameters to the material itself |
+    // //______________________________________________________________________________________________________________________|
 
-    //______________________________________________________________________________________________________________________
-    //PUT PROPERTIES INTO TABLE                                            !!! PUT PROPERTIES INTO TABLE !!!              //|             
-    auto couplingProperties = new G4MaterialPropertiesTable();                                                            //|
-    couplingProperties->AddProperty(                                                                                      //|
-        "RINDEX", photonEnergy, couplingIndex, 3);                                                                        //|
-    couplingProperties->AddProperty(                                                                                      //|
-        "ABSLENGTH", photonEnergy, couplingAbsorption, 3);                                                                //|
-                                                                                                                          //|
-    couplingMaterial->SetMaterialPropertiesTable(couplingProperties); //ATTACH table data/parameters to the material itself |
-    //______________________________________________________________________________________________________________________|
+    // // MAKING IT SO THAT the coupling sheet's dimensions follow the crystal.
+    // auto couplingSolid = new G4Box(
+    //     "OpticalCoupling",
+    //     crystalSolid->GetXHalfLength(),
+    //     crystalSolid->GetYHalfLength(),
+    //     couplingThickness/2
+    // );
 
-    // MAKING IT SO THAT the coupling sheet's dimensions follow the crystal.
-    auto couplingSolid = new G4Box(
-        "OpticalCoupling",
-        crystalSolid->GetXHalfLength(),
-        crystalSolid->GetYHalfLength(),
-        couplingThickness/2
-    );
+    // auto couplingLogical = new G4LogicalVolume(
+    //     couplingSolid, couplingMaterial, "OpticalCoupling");  //COMBINE SHAPE + MATERIAL
 
-    auto couplingLogical = new G4LogicalVolume(
-        couplingSolid, couplingMaterial, "OpticalCoupling");  //COMBINE SHAPE + MATERIAL
+    // auto couplingPhysical = new G4PVPlacement(                //NOW GIVING IT A POSITION
+    //     nullptr,                                                      //no rotation
+    //     G4ThreeVector(arrayOffsetX, arrayOffsetY, couplingCentreZ),   //Position of centre
+    //     couplingLogical,                                              //shape+material definition to place
+    //     "OpticalCoupling",                                            //name of THIS placement
+    //     logical,                                                      //volume (ie this world)
+    //     false,                                                        
+    //     0,                                                            //ID of THIS placement
+    //     true                                                          //CHecking overlaps
+    // );
 
-    auto couplingPhysical = new G4PVPlacement(                //NOW GIVING IT A POSITION
-        nullptr,                                                      //no rotation
-        G4ThreeVector(arrayOffsetX, arrayOffsetY, couplingCentreZ),   //Position of centre
-        couplingLogical,                                              //shape+material definition to place
-        "OpticalCoupling",                                            //name of THIS placement
-        logical,                                                      //volume (ie this world)
-        false,                                                        
-        0,                                                            //ID of THIS placement
-        true                                                          //CHecking overlaps
-    );
-
-    //APPEARANCE
-    auto couplingAppearance =
-        new G4VisAttributes(G4Colour(1.0, 1.0, 0.0));    //RGB VAlues for color
-    couplingAppearance->SetForceWireframe(true);
-    couplingLogical->SetVisAttributes(couplingAppearance);
+    // //APPEARANCE
+    // auto couplingAppearance =
+    //     new G4VisAttributes(G4Colour(1.0, 1.0, 0.0));    //RGB VAlues for color
+    // couplingAppearance->SetForceWireframe(true);
+    // couplingLogical->SetVisAttributes(couplingAppearance);
 
 
     // ===================================== SENSOR MATERIAL AND ACTIVE SURFACE =====================================
 
     auto sensorMaterial =
         G4NistManager::Instance()->FindOrBuildMaterial("G4_Si");   //SELECTED MATERIAL FOR SENSOR (SILICON)
+
+// // =================================STEPPING ACTION ADDITION============================================|
+//                                                                                                         |
+    // Ideal collector: match the crystal's refractive index.                                              |
+    // Keep these values matched if the crystal index changes.                                             |
+    G4double sensorIndex[] = {1.79, 1.79, 1.79};                                                         //|
+//                                                                                                         |
+    auto sensorProperties = new G4MaterialPropertiesTable();                                             //|
+//                                                                                                         |
+    sensorProperties->AddProperty(                                                                       //|
+        "RINDEX", photonEnergy, sensorIndex, 3);                                                         //|
+//                                                                                                         |
+    sensorMaterial->SetMaterialPropertiesTable(sensorProperties);                                        //|
+//                                                                                                         |
+// // =====================================================================================================|
+
+
+
 
     auto sensorSolid = new G4Box(             //sensor shape and logical volume
         "SiPM", 
@@ -128,50 +143,6 @@ void BuildSiPMArray(
     sensorLogical->SetVisAttributes(sensorAppearance);
 
     // =================================================================================================================================================================================
-
-    // ===== ASSUMED DATA ===== FIND REAL PARAMETERS/DATA ===== STUDY WHAT DETECTORS ARE USED AND USE REAL INFO FOR THESE ===== ASSUMED DATA ===== ASSUMED DATA ===== ASSUMED DATA =====
-    
-    // =================================================================================================================================================================================
-    // Assumed effective probability of detection per incident photon.
-    // Includes unresolved microcell fill factor and avalanche probability.
-    // Constant with wavelength and angle for this simplified model.
-    const G4double assumedPDE = 0.30;
-
-    // Assumed probability of optical reflection at the active surface.
-    // Keep below 1, and require assumedPDE <= 1 - sensorReflectivity.
-    const G4double sensorReflectivity = 0.10;
-
-    // Geant4 EFFICIENCY is conditional on absorption.
-    // This gives an overall incident detection probability of 0.30:
-    // (1 - 0.10) * (0.30 / 0.90) = 0.30.
-    const G4double conditionalEfficiency =
-        assumedPDE / (1.0 - sensorReflectivity);
-
-    //OPTICAL SURFACE PROPERTIES (MAKING ARRAYS)
-    G4double reflection[] = {
-        sensorReflectivity, sensorReflectivity, sensorReflectivity
-    };
-
-    G4double efficiency[] = {
-        conditionalEfficiency,
-        conditionalEfficiency,
-        conditionalEfficiency
-    };
-
-    auto sensorSurface = new G4OpticalSurface("SiPMActiveSurface");
-
-    // Effective absorbing/reflecting photodetector boundary.
-    // This EXPLAINS DETECTOR surface response:
-    sensorSurface->SetType(dielectric_metal);
-    sensorSurface->SetModel(unified);
-    sensorSurface->SetFinish(polished);
-
-    auto sensorProperties = new G4MaterialPropertiesTable();
-    sensorProperties->AddProperty(
-        "REFLECTIVITY", photonEnergy, reflection, 3);
-    sensorProperties->AddProperty(
-        "EFFICIENCY", photonEnergy, efficiency, 3);
-    sensorSurface->SetMaterialPropertiesTable(sensorProperties);
 
     // ===== PLACE SIXTEEN CHANNELS =====
 
@@ -197,18 +168,6 @@ void BuildSiPMArray(
                 sensorID,  // Unique channel number: 0 to 15
                 true       // Check geometry overlaps
             );
-
-            // Detection response applies only when light travels from the coupling layer into this sensor's front face.
-            new G4LogicalBorderSurface(
-                "CouplingToSiPM",
-                couplingPhysical,
-                sensorPhysical,
-                sensorSurface
-            );
-        }
     }
-
-
-//========================================================================================================================
-    
+}
 }

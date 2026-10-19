@@ -19,7 +19,7 @@ void BuildCollimator(
     G4LogicalVolume* worldLogical,
     G4Box* crystalSolid
 )
-{
+{   //Parameters:
     const G4double thickness = 35*mm;
     const G4double holeWidth = 1.50*mm;
     const G4double septum = 0.20*mm;
@@ -32,7 +32,7 @@ void BuildCollimator(
         -crystalSolid->GetZHalfLength() - thickness/2;
 
     auto lead =
-        G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb");
+        G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb"); //material
 
     // Lead fills the entire plate except the vacuum channels.
     auto blockSolid = new G4Box(

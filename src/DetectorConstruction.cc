@@ -12,8 +12,9 @@
         //REMOVED WHEN I WAS SEPARATING THE SIPM ARRAY OUT   #include "G4OpticalSurface.hh"          //THIS AND #3
         //REMOVED, SAME REASON AS ABOVE                      #include "G4LogicalBorderSurface.hh"    //THIS for #3 SiPM addition
         //INSTEAD we have \/ 
-#include "SiPMArray.hh"   //the separated part...
-#include "Collimator.hh"  //the COLLIMATOR (separated)
+#include "SiPMArray.hh"             //the separated part...
+#include "Collimator.hh"            //the COLLIMATOR (separated)
+#include "CrystalWrapping.hh"       //the Reflective Wrapping around the Crystal
 
 //SETTING THE WORLD 
 G4VPhysicalVolume* DetectorConstruction::Construct()
@@ -28,6 +29,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     auto logical =
         new G4LogicalVolume(solid, material, "World");
+
+//========================================== WORLD BOX COLOR ==========================
+    auto worldAppearance =
+    new G4VisAttributes(G4Colour(0.5, 0.5, 0.5, 0.4));
+
+    worldAppearance->SetForceWireframe(true);
+    logical->SetVisAttributes(worldAppearance);
+
+//=====================================================================================
 
     auto physical = new G4PVPlacement(
         nullptr,
@@ -55,7 +65,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4double photonEnergy[]     = {2.0*eV, 2.25*eV, 2.5*eV};                     // \/  \/ RELATIVE INTENSITY NOT PROBABILITY \/  \/
     G4double emission[]         = {0.2, 1.0, 0.2};                               // Corresponding emission intensity at each energy
     G4double crystalIndex[]     = {1.79, 1.79, 1.79};                            // Refractive index at each energy
-    G4double absorptionLength[] = {1*m, 1*m, 1*m};                               // Mean distance before absorption
+    G4double absorptionLength[] = {1e19*m, 1e10*m, 1e10*m};                               // Mean distance before absorption
 
     auto crystalProperties = new G4MaterialPropertiesTable();
 
@@ -65,7 +75,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     crystalProperties->AddProperty("ABSLENGTH", photonEnergy, absorptionLength, 3);
 
     // Properties independent of photon energy
-    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 54.0/MeV);        // Mean photons per MeV deposited  //54000 was example amount, we changed it to 54 for now
+    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 0.1/MeV);        // Mean photons per MeV deposited  //54000 was example amount, we changed it to 54 for now| PROF=1000MeV
     crystalProperties->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 1000*ns);  // Emission decay time
     crystalProperties->AddConstProperty("SCINTILLATIONYIELD1", 1.0);             // Fraction in component 1: all light
     crystalProperties->AddConstProperty("RESOLUTIONSCALE", 1.0);                 // Photon-count fluctuation scale
@@ -79,8 +89,6 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     material->SetMaterialPropertiesTable(worldProperties);
 
 //============================================================================================================================
-
-
 
     // Defining its Shape: a 2 cm cube (G4Box takes half-lengths)
     auto crystalSolid =
@@ -97,7 +105,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
         );
 
     // Placing the crystal in the world- (0,0,0) to place it at origin
-    new G4PVPlacement(
+    auto crystalPhysical = new G4PVPlacement(
         nullptr,                // no rotation
         G4ThreeVector(0, 0, 0), //position its placed at
         crystalLogical,
@@ -115,6 +123,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     crystalAppearance->SetForceWireframe(true);
     crystalLogical->SetVisAttributes(crystalAppearance);
     
+    BuildCrystalWrapping(logical, crystalSolid, crystalPhysical);              //REFLECTIVE layer being built
     BuildCollimator(logical, crystalSolid);                   //COLLIMATOR being built
     BuildSiPMArray(logical, crystalSolid, photonEnergy);      //SiPM Array being built
 

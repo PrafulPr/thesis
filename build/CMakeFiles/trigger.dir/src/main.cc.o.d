@@ -649,4 +649,9 @@ CMakeFiles/trigger.dir/src/main.cc.o: /home/praful/TRIGGER/src/main.cc \
  /opt/geant4/include/Geant4/G4coutDestination.hh \
  /opt/geant4/include/Geant4/G4UIbatch.hh \
  /opt/geant4/include/Geant4/G4OpticalPhysics.hh \
- /opt/geant4/include/Geant4/G4OpticalParameters.hh
+ /opt/geant4/include/Geant4/G4OpticalParameters.hh \
+ /home/praful/TRIGGER/include/EventAction.hh \
+ /opt/geant4/include/Geant4/G4UserEventAction.hh \
+ /opt/geant4/include/Geant4/globals.hh \
+ /home/praful/TRIGGER/include/SteppingAction.hh \
+ /opt/geant4/include/Geant4/G4UserSteppingAction.hh

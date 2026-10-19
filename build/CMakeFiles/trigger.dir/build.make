@@ -139,13 +139,58 @@ CMakeFiles/trigger.dir/src/Collimator.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/trigger.dir/src/Collimator.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/praful/TRIGGER/src/Collimator.cc -o CMakeFiles/trigger.dir/src/Collimator.cc.s
 
+CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o: CMakeFiles/trigger.dir/flags.make
+CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o: /home/praful/TRIGGER/src/CrystalWrapping.cc
+CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o: CMakeFiles/trigger.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/praful/TRIGGER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o -MF CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o.d -o CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o -c /home/praful/TRIGGER/src/CrystalWrapping.cc
+
+CMakeFiles/trigger.dir/src/CrystalWrapping.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/trigger.dir/src/CrystalWrapping.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/praful/TRIGGER/src/CrystalWrapping.cc > CMakeFiles/trigger.dir/src/CrystalWrapping.cc.i
+
+CMakeFiles/trigger.dir/src/CrystalWrapping.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/trigger.dir/src/CrystalWrapping.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/praful/TRIGGER/src/CrystalWrapping.cc -o CMakeFiles/trigger.dir/src/CrystalWrapping.cc.s
+
+CMakeFiles/trigger.dir/src/EventAction.cc.o: CMakeFiles/trigger.dir/flags.make
+CMakeFiles/trigger.dir/src/EventAction.cc.o: /home/praful/TRIGGER/src/EventAction.cc
+CMakeFiles/trigger.dir/src/EventAction.cc.o: CMakeFiles/trigger.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/praful/TRIGGER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/trigger.dir/src/EventAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/trigger.dir/src/EventAction.cc.o -MF CMakeFiles/trigger.dir/src/EventAction.cc.o.d -o CMakeFiles/trigger.dir/src/EventAction.cc.o -c /home/praful/TRIGGER/src/EventAction.cc
+
+CMakeFiles/trigger.dir/src/EventAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/trigger.dir/src/EventAction.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/praful/TRIGGER/src/EventAction.cc > CMakeFiles/trigger.dir/src/EventAction.cc.i
+
+CMakeFiles/trigger.dir/src/EventAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/trigger.dir/src/EventAction.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/praful/TRIGGER/src/EventAction.cc -o CMakeFiles/trigger.dir/src/EventAction.cc.s
+
+CMakeFiles/trigger.dir/src/SteppingAction.cc.o: CMakeFiles/trigger.dir/flags.make
+CMakeFiles/trigger.dir/src/SteppingAction.cc.o: /home/praful/TRIGGER/src/SteppingAction.cc
+CMakeFiles/trigger.dir/src/SteppingAction.cc.o: CMakeFiles/trigger.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/praful/TRIGGER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/trigger.dir/src/SteppingAction.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/trigger.dir/src/SteppingAction.cc.o -MF CMakeFiles/trigger.dir/src/SteppingAction.cc.o.d -o CMakeFiles/trigger.dir/src/SteppingAction.cc.o -c /home/praful/TRIGGER/src/SteppingAction.cc
+
+CMakeFiles/trigger.dir/src/SteppingAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/trigger.dir/src/SteppingAction.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/praful/TRIGGER/src/SteppingAction.cc > CMakeFiles/trigger.dir/src/SteppingAction.cc.i
+
+CMakeFiles/trigger.dir/src/SteppingAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/trigger.dir/src/SteppingAction.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/praful/TRIGGER/src/SteppingAction.cc -o CMakeFiles/trigger.dir/src/SteppingAction.cc.s
+
 # Object files for target trigger
 trigger_OBJECTS = \
 "CMakeFiles/trigger.dir/src/main.cc.o" \
 "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o" \
 "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o" \
 "CMakeFiles/trigger.dir/src/SiPMArray.cc.o" \
-"CMakeFiles/trigger.dir/src/Collimator.cc.o"
+"CMakeFiles/trigger.dir/src/Collimator.cc.o" \
+"CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o" \
+"CMakeFiles/trigger.dir/src/EventAction.cc.o" \
+"CMakeFiles/trigger.dir/src/SteppingAction.cc.o"
 
 # External object files for target trigger
 trigger_EXTERNAL_OBJECTS =
@@ -155,6 +200,9 @@ trigger: CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o
 trigger: CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o
 trigger: CMakeFiles/trigger.dir/src/SiPMArray.cc.o
 trigger: CMakeFiles/trigger.dir/src/Collimator.cc.o
+trigger: CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o
+trigger: CMakeFiles/trigger.dir/src/EventAction.cc.o
+trigger: CMakeFiles/trigger.dir/src/SteppingAction.cc.o
 trigger: CMakeFiles/trigger.dir/build.make
 trigger: /opt/geant4/lib/libG4Tree.so
 trigger: /opt/geant4/lib/libG4FR.so
@@ -197,7 +245,7 @@ trigger: /opt/geant4/lib/libG4ptl.so.3.0.0
 trigger: /opt/CLHEP/lib/libCLHEP-2.4.7.2.so
 trigger: /opt/geant4/lib/libG4zlib.so
 trigger: CMakeFiles/trigger.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/praful/TRIGGER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable trigger"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/praful/TRIGGER/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable trigger"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/trigger.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

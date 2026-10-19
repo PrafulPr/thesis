@@ -344,4 +344,5 @@ CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o: \
  /opt/geant4/include/Geant4/G4MaterialPropertiesTable.hh \
  /home/praful/TRIGGER/include/SiPMArray.hh \
  /opt/geant4/include/Geant4/globals.hh \
- /home/praful/TRIGGER/include/Collimator.hh
+ /home/praful/TRIGGER/include/Collimator.hh \
+ /home/praful/TRIGGER/include/CrystalWrapping.hh
