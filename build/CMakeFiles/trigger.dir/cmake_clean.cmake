@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o.d"
   "CMakeFiles/trigger.dir/src/EventAction.cc.o"
   "CMakeFiles/trigger.dir/src/EventAction.cc.o.d"
+  "CMakeFiles/trigger.dir/src/Object.cc.o"
+  "CMakeFiles/trigger.dir/src/Object.cc.o.d"
   "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o"
   "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o.d"
   "CMakeFiles/trigger.dir/src/SiPMArray.cc.o"

@@ -48,21 +48,9 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
     fParticleGun->SetParticlePosition(
         G4ThreeVector(x, y, sourceZ));
 
-    // Random direction within a cone around +z.
-    const G4double halfAngle = 5*deg;
-    const G4double cosTheta =
-        1.0 - G4UniformRand()*(1.0 - std::cos(halfAngle));
-    const G4double sinTheta =
-        std::sqrt(1.0 - cosTheta*cosTheta);
+    // Every gamma travels straight along +z.
+    fParticleGun->SetParticleMomentumDirection(
+        G4ThreeVector(0, 0, 1));
 
-    const G4double phi = twopi*G4UniformRand();
-
-    const G4ThreeVector direction(
-        sinTheta*std::cos(phi),
-        sinTheta*std::sin(phi),
-        cosTheta
-    );
-
-    fParticleGun->SetParticleMomentumDirection(direction);
     fParticleGun->GeneratePrimaryVertex(event);
 }

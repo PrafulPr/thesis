@@ -225,6 +225,30 @@ src/EventAction.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/EventAction.cc.s
 .PHONY : src/EventAction.cc.s
 
+src/Object.o: src/Object.cc.o
+.PHONY : src/Object.o
+
+# target to build an object file
+src/Object.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/Object.cc.o
+.PHONY : src/Object.cc.o
+
+src/Object.i: src/Object.cc.i
+.PHONY : src/Object.i
+
+# target to preprocess a source file
+src/Object.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/Object.cc.i
+.PHONY : src/Object.cc.i
+
+src/Object.s: src/Object.cc.s
+.PHONY : src/Object.s
+
+# target to generate assembly for a file
+src/Object.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/src/Object.cc.s
+.PHONY : src/Object.cc.s
+
 src/PrimaryGeneratorAction.o: src/PrimaryGeneratorAction.cc.o
 .PHONY : src/PrimaryGeneratorAction.o
 
@@ -342,6 +366,9 @@ help:
 	@echo "... src/EventAction.o"
 	@echo "... src/EventAction.i"
 	@echo "... src/EventAction.s"
+	@echo "... src/Object.o"
+	@echo "... src/Object.i"
+	@echo "... src/Object.s"
 	@echo "... src/PrimaryGeneratorAction.o"
 	@echo "... src/PrimaryGeneratorAction.i"
 	@echo "... src/PrimaryGeneratorAction.s"

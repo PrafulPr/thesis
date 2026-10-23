@@ -10,6 +10,12 @@
 #include "G4TouchableHandle.hh"
 #include "G4Exception.hh"
 
+//FOR DATA CLLECTION:
+#include "G4VProcess.hh"
+#include "G4ProcessManager.hh"
+#include "G4ProcessVector.hh"
+#include "G4OpBoundaryProcess.hh"
+
 SteppingAction::SteppingAction(EventAction* eventAction)
     : fEventAction(eventAction)
 {
@@ -17,7 +23,18 @@ SteppingAction::SteppingAction(EventAction* eventAction)
 
 void SteppingAction::UserSteppingAction(const G4Step* step)
 {
+    //=======================DATA COLLECTION=========================================
+    // Count optical photons created during this step.
+    for (const auto* secondary : *step->GetSecondaryInCurrentStep())
+    {
+        if (secondary->GetDefinition() ==
+            G4OpticalPhoton::OpticalPhotonDefinition())
+        {
+            fEventAction->RecordGenerated();
+        }
+    }
     auto track = step->GetTrack();
+    //===============================================================================
 
     // Ignore gamma rays, electrons and all other particle types.
     if (track->GetDefinition() !=
@@ -27,6 +44,38 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     const auto pre = step->GetPreStepPoint();         //get pre info
     const auto post = step->GetPostStepPoint();       //get post info
 
+//_______________________________________________________________________________________________
+//==================== DATA COLLECTION ==========================================================
+
+    // Count absorption inside a material.
+    const auto* process = post->GetProcessDefinedStep();
+
+    if (process && process->GetProcessName() == "OpAbsorption")
+    {
+        fEventAction->RecordAbsorbed();
+        return;
+    }
+
+    // Count absorption at an optical surface.
+    if (post->GetStepStatus() == fGeomBoundary)
+    {
+        auto* processes =
+            track->GetDefinition()->GetProcessManager()->GetProcessList();
+
+        for (G4int i = 0; i < processes->size(); ++i)
+        {
+            auto* boundary =
+                dynamic_cast<G4OpBoundaryProcess*>((*processes)[i]);
+
+            if (boundary && boundary->GetStatus() == Absorption)
+            {
+                fEventAction->RecordAbsorbed();
+                return;
+            }
+        }
+    }
+//===============================================================================================
+//_______________________________________________________________________________________________
 
     // ================= ENSURE geometrical boundaries: =======================
     if (post->GetStepStatus() != fGeomBoundary)
@@ -70,5 +119,5 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
 
     // Record first, then stop the photon.
     fEventAction->RecordPhoton(sensorID, energy);
-    track->SetTrackStatus(fStopAndKill);
+    track->SetTrackStatus(fStopAndKill);   //KIlls photon
 }

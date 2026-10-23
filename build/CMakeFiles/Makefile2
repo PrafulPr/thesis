@@ -81,12 +81,12 @@ clean: CMakeFiles/trigger.dir/clean
 CMakeFiles/trigger.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/trigger.dir/build.make CMakeFiles/trigger.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/praful/TRIGGER/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target trigger"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/praful/TRIGGER/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target trigger"
 .PHONY : CMakeFiles/trigger.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/trigger.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/praful/TRIGGER/build/CMakeFiles 9
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/praful/TRIGGER/build/CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/trigger.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/praful/TRIGGER/build/CMakeFiles 0
 .PHONY : CMakeFiles/trigger.dir/rule

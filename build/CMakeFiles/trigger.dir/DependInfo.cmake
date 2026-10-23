@@ -12,6 +12,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/praful/TRIGGER/src/CrystalWrapping.cc" "CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o" "gcc" "CMakeFiles/trigger.dir/src/CrystalWrapping.cc.o.d"
   "/home/praful/TRIGGER/src/DetectorConstruction.cc" "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/DetectorConstruction.cc.o.d"
   "/home/praful/TRIGGER/src/EventAction.cc" "CMakeFiles/trigger.dir/src/EventAction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/EventAction.cc.o.d"
+  "/home/praful/TRIGGER/src/Object.cc" "CMakeFiles/trigger.dir/src/Object.cc.o" "gcc" "CMakeFiles/trigger.dir/src/Object.cc.o.d"
   "/home/praful/TRIGGER/src/PrimaryGeneratorAction.cc" "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/PrimaryGeneratorAction.cc.o.d"
   "/home/praful/TRIGGER/src/SiPMArray.cc" "CMakeFiles/trigger.dir/src/SiPMArray.cc.o" "gcc" "CMakeFiles/trigger.dir/src/SiPMArray.cc.o.d"
   "/home/praful/TRIGGER/src/SteppingAction.cc" "CMakeFiles/trigger.dir/src/SteppingAction.cc.o" "gcc" "CMakeFiles/trigger.dir/src/SteppingAction.cc.o.d"

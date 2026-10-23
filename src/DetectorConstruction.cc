@@ -15,6 +15,7 @@
 #include "SiPMArray.hh"             //the separated part...
 #include "Collimator.hh"            //the COLLIMATOR (separated)
 #include "CrystalWrapping.hh"       //the Reflective Wrapping around the Crystal
+#include "Object.hh"                //lowkey self explanatory... its the object!! 
 
 //SETTING THE WORLD 
 G4VPhysicalVolume* DetectorConstruction::Construct()
@@ -65,7 +66,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4double photonEnergy[]     = {2.0*eV, 2.25*eV, 2.5*eV};                     // \/  \/ RELATIVE INTENSITY NOT PROBABILITY \/  \/
     G4double emission[]         = {0.2, 1.0, 0.2};                               // Corresponding emission intensity at each energy
     G4double crystalIndex[]     = {1.79, 1.79, 1.79};                            // Refractive index at each energy
-    G4double absorptionLength[] = {1e19*m, 1e10*m, 1e10*m};                               // Mean distance before absorption
+    G4double absorptionLength[] = {1*m, 1*m, 1*m};                               // Mean distance before absorption
 
     auto crystalProperties = new G4MaterialPropertiesTable();
 
@@ -75,7 +76,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     crystalProperties->AddProperty("ABSLENGTH", photonEnergy, absorptionLength, 3);
 
     // Properties independent of photon energy
-    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 0.1/MeV);        // Mean photons per MeV deposited  //54000 was example amount, we changed it to 54 for now| PROF=1000MeV
+    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 1000/MeV);        // Mean photons per MeV deposited  //54000 was example amount, we changed it to 54 for now| PROF=1000MeV
     crystalProperties->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 1000*ns);  // Emission decay time
     crystalProperties->AddConstProperty("SCINTILLATIONYIELD1", 1.0);             // Fraction in component 1: all light
     crystalProperties->AddConstProperty("RESOLUTIONSCALE", 1.0);                 // Photon-count fluctuation scale
@@ -126,6 +127,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     BuildCrystalWrapping(logical, crystalSolid, crystalPhysical);              //REFLECTIVE layer being built
     BuildCollimator(logical, crystalSolid);                   //COLLIMATOR being built
     BuildSiPMArray(logical, crystalSolid, photonEnergy);      //SiPM Array being built
+    BuildObject(logical);                                     // our object
 
     return physical;
 }

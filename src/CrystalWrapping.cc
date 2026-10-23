@@ -34,7 +34,7 @@ void BuildCrystalWrapping(
     appearance->SetForceWireframe(true);
 
 //==============================REFLECTION==============================|
-    // Simplified mirror-like foil: assumed 90% reflection.           //|
+    // Simplified mirror-like foil: assumed 100% reflection.          //|
     G4double energy[] = {2.0*eV, 2.25*eV, 2.5*eV};                    //|
     G4double reflectivity[] = {1.00, 1.00, 1.00};                     //|
     G4double efficiency[] = {0.0, 0.0, 0.0};                          //|

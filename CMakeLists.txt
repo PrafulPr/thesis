@@ -12,6 +12,7 @@ add_executable(trigger
     src/CrystalWrapping.cc   #Reflective layer aroudn the crystals... likewise
     src/EventAction.cc       #Stepping action (pre and post)
     src/SteppingAction.cc    #Stepping action (pre and post)
+    src/Object.cc
 )
 
 target_include_directories(trigger PRIVATE include)

@@ -25,15 +25,17 @@ void BuildSiPMArray(
     //NOTE: const here means the value cannot be reassigned after the initialization
     //=============================================================================================================================================|
     //                                                                                                                                             |
-    const G4int rows = 4;                                                                //NUMBER OF SENSORS-    ROWS                              |
-    const G4int columns = 4;                                                             //NUMBER OF SENSORS-   COLUMNS                            |
-    const G4double sensorWidth = 40*mm;                                                  //SENSOR WIDTH            X                               |
-    const G4double sensorHeight = 40*mm;                                                 //SENSOR HEIGHT           Y                               |
-    const G4double sensorThickness = 4*mm;                                             //SENSOR THICKNESS        Z                               |
+    const G4int rows = 10;                                                               //NUMBER OF SENSORS-    ROWS                              |
+    const G4int columns = 10;                                                            //NUMBER OF SENSORS-   COLUMNS                            |
+    const G4double sensorWidth = 16*mm;                                                  //SENSOR WIDTH            X                               |
+    const G4double sensorHeight = 16*mm;                                                 //SENSOR HEIGHT           Y                               |
+    const G4double sensorThickness = 5*mm;                                               //SENSOR THICKNESS        Z                               |
+    //IF CHANGING no. of DETECTORS (VALUES GIVEN ABOVE), also edit EventAction.hh and .cc                                                          |
+    //                                                                                                                                             |
     // Centre-to-centre separation                                                                                                                 |
-    const G4double pitchX = 40*mm;                                                       //CENTRE TO CENTRE DISTANCE X                             |
-    const G4double pitchY = 40*mm;                                                       //CENTRE TO CENTRE DISTANCE Y                             |
-    //                                                                                                                                             |                            |        
+    const G4double pitchX = 16*mm;                                                       //CENTRE TO CENTRE DISTANCE X                             |
+    const G4double pitchY = 16*mm;                                                       //CENTRE TO CENTRE DISTANCE Y                             |
+    //                                                                                                                                             |                                  
     const G4double arrayOffsetX = 0*mm;                                                  //X OFFSET                                                |
     const G4double arrayOffsetY = 0*mm;                                                  //Y OFFSET                                                |
     //                                                                                                                                             |

@@ -13,11 +13,11 @@
 /vis/viewer/set/style wireframe
 /vis/viewer/set/viewpointThetaPhi 70 30
 
-/vis/scene/add/axes 0 0 0 20 cm
+#/vis/scene/add/axes 0 0 0 20 cm
 /vis/scene/add/trajectories smooth
 /vis/modeling/trajectories/create/drawByParticleID
 # /vis/modeling/trajectories/drawByParticleID-0/set gamma purple
-/vis/modeling/trajectories/drawByParticleID-0/setRGBA gamma 0.6 0.0 0.8 0.0
+/vis/modeling/trajectories/drawByParticleID-0/setRGBA gamma 0.6 0.0 0.8 0.3
 /vis/modeling/trajectories/drawByParticleID-0/setRGBA opticalphoton 1.0 1.0 0.0 0.6
 /vis/scene/endOfEventAction accumulate
 
