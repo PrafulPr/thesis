@@ -4,12 +4,96 @@
 import argparse
 import csv
 import math
+import shutil
+from datetime import datetime
 from pathlib import Path
 
 
 ROWS = 10
 COLUMNS = 10
 SENSOR_COUNT = ROWS * COLUMNS
+TRAINING_DATA_ROOT = Path("/home/praful/Learning/Training_Data_collection")
+
+
+def positive_parameter(value):
+    number = float(value)
+    if not math.isfinite(number) or number <= 0:
+        raise argparse.ArgumentTypeError("must be a finite positive number")
+    return number
+
+
+def save_indexed_heatmap(fig, folder, p1, p2):
+    """Save with P1 in photons/MeV and P2 in cm, without overwriting."""
+    prefix = f"P1_{p1:g}_P2_{p2:g}_"
+    index = 1
+    while True:
+        output = folder / f"{prefix}{index:02d}.png"
+        try:
+            stream = output.open("xb")
+        except FileExistsError:
+            index += 1
+            continue
+        with stream:
+            fig.savefig(stream, format="png", dpi=160)
+        return output
+
+
+def archive_training_data(photon_path, summary_path, destination_root=None, created_at=None):
+    """Copy the complete CSV pair into a new minute-stamped folder.
+
+    Existing archives are never opened for writing. Source CSVs are read-only.
+    Finish the simulation before calling this function.
+    """
+    photon_path, summary_path = Path(photon_path), Path(summary_path)
+    destination_root = Path(destination_root) if destination_root is not None else TRAINING_DATA_ROOT
+    created_at = created_at or datetime.now().astimezone()
+    folder = destination_root / created_at.strftime("Train_Data_%M_%H_%d_%m")
+    sources = (photon_path, summary_path)
+
+    def signature(path):
+        status = path.stat()
+        return status.st_dev, status.st_ino, status.st_size, status.st_mtime_ns
+
+    before = tuple(signature(path) for path in sources)
+    destination_root.mkdir(parents=True, exist_ok=True)
+    # Refuse a collision, including another invocation during the same minute.
+    try:
+        folder.mkdir(exist_ok=False)
+    except FileExistsError as error:
+        raise FileExistsError(
+            f"Archive already exists: {folder}. Nothing was overwritten. "
+            "Run again in a different minute to create a new archive."
+        ) from error
+
+    created_files = []
+    try:
+        for source, name in zip(sources, ("photons.csv", "photon_summary.csv")):
+            target = folder / name
+            with target.open("xb") as output:
+                created_files.append(target)
+                with source.open("rb") as input_file:
+                    shutil.copyfileobj(input_file, output)
+
+        if tuple(signature(path) for path in sources) != before:
+            raise ValueError("CSV files changed during copying. Finish the simulation and retry.")
+
+        # Validate ALL archived events, regardless of the requested plot selection.
+        _, _, archived_events = load_data(folder / "photons.csv")
+        load_summary(folder / "photon_summary.csv", archived_events)
+        with (folder / "photon_summary.csv").open(newline="") as summary_file:
+            summary_keys = [
+                (int(row["run_id"]), int(row["event_id"]))
+                for row in csv.DictReader(summary_file)
+            ]
+        if len(summary_keys) != len(archived_events) or set(summary_keys) != set(archived_events):
+            raise ValueError("Archive CSV files contain different events.")
+    except Exception:
+        # Remove only files created by this invocation; never an existing archive.
+        for target in created_files:
+            target.unlink()
+        folder.rmdir()
+        raise
+    return folder
 
 
 def load_data(path, run_id=None, event_id=None):
@@ -83,7 +167,10 @@ def main():
     selection.add_argument("--event", type=int, help="Plot only this event ID (within selected runs)")
     selection.add_argument("--recent", type=int, metavar="N",
                            help="Plot the Nth most recent saved event: 0 = latest, 1 = previous (optionally within --run)")
-    parser.add_argument("--output", type=Path, help="Output PNG path")
+    parser.add_argument("--p1", required=True, type=positive_parameter,
+                        help="Scintillation yield used for this data, in photons/MeV")
+    parser.add_argument("--p2", required=True, type=positive_parameter,
+                        help="Crystal absorption length used for this data, in cm")
     parser.add_argument("--no-show", action="store_true", help="Save without opening a window")
     args = parser.parse_args()
 
@@ -103,8 +190,12 @@ def main():
         counts, energy_totals, events = load_data(args.csv, args.run, args.event)
         generated, absorbed, collected = load_summary(
             args.summary or args.csv.with_name("photon_summary.csv"), events)
+        archive_folder = archive_training_data(
+            args.csv, args.summary or args.csv.with_name("photon_summary.csv"))
     except (OSError, ValueError, KeyError, csv.Error) as error:
         parser.exit(1, f"Error: {error}\n")
+
+    print(f"Archived full CSV pair: {archive_folder}")
 
     import matplotlib
     if args.no_show:
@@ -142,8 +233,8 @@ def main():
     ax.invert_xaxis()
     fig.colorbar(im, ax=ax, label="Photon count")
 
-    output = args.output or root / "photon_plots.png"
-    fig.savefig(output, dpi=160)
+    output = save_indexed_heatmap(
+        fig, root / "Heatmap_P1P2_plots", args.p1, args.p2)
     print(f"Read: {args.csv.resolve()}")
     print(f"Selection: {event_label} | Collected photons: {total}")
     print(f"Saved: {output.resolve()}")

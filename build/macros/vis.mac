@@ -23,4 +23,5 @@
 
 /random/setSeeds 12345 67890
 /vis/viewer/zoom 4
-/run/beamOn 1000
+/run/printProgress 1000
+/run/beamOn 100

@@ -501,4 +501,8 @@ CMakeFiles/trigger.dir/src/EventAction.cc.o: \
  /opt/geant4/include/Geant4/rundefs.hh /usr/include/c++/13/list \
  /usr/include/c++/13/bits/stl_list.h /usr/include/c++/13/bits/list.tcc \
  /opt/geant4/include/Geant4/G4SystemOfUnits.hh \
- /opt/geant4/include/Geant4/G4Exception.hh
+ /opt/geant4/include/Geant4/G4Exception.hh \
+ /opt/geant4/include/Geant4/G4Material.hh \
+ /opt/geant4/include/Geant4/G4MaterialPropertiesTable.hh \
+ /opt/geant4/include/Geant4/G4MaterialPropertyVector.hh \
+ /opt/geant4/include/Geant4/G4PrimaryVertex.hh

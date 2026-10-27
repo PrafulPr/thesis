@@ -39,11 +39,11 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
     const G4double sourceZ = -70*cm;               //POSITION
 
     // Independently sample x and y across the square.
-    const G4double x =
-        (2.0*G4UniformRand() - 1.0)*squareHalfWidth;
+    const G4double x = 0*mm;
+        //(2.0*G4UniformRand() - 1.0)*squareHalfWidth;  //RANDOM
 
-    const G4double y =
-        (2.0*G4UniformRand() - 1.0)*squareHalfWidth;
+    const G4double y = 0*mm;
+        //(2.0*G4UniformRand() - 1.0)*squareHalfWidth;  //RANDOM
 
     fParticleGun->SetParticlePosition(
         G4ThreeVector(x, y, sourceZ));
