@@ -36,7 +36,7 @@ void BuildCrystalWrapping(
 //==============================REFLECTION==============================|
     // Simplified mirror-like foil: assumed 100% reflection.          //|
     G4double energy[] = {2.0*eV, 2.25*eV, 2.5*eV};                    //|
-    G4double reflectivity[] = {1.00, 1.00, 1.00};                     //|
+    G4double reflectivity[] = {0.98, 0.98, 1.98};                     //|
     G4double efficiency[] = {0.0, 0.0, 0.0};                          //|
                                                                       //|
     auto foilSurface = new G4OpticalSurface("AluminiumSurface");      //|

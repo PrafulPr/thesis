@@ -12,7 +12,8 @@ from pathlib import Path
 ROWS = 10
 COLUMNS = 10
 SENSOR_COUNT = ROWS * COLUMNS
-TRAINING_DATA_ROOT = Path("/home/praful/Learning/Training_Data_collection")
+OUTPUT_DATA = Path(__file__).resolve().parent.parent / "Output_Data"
+TRAINING_DATA_ROOT = OUTPUT_DATA / "Training_Data_collection"
 
 
 def positive_parameter(value):
@@ -24,6 +25,7 @@ def positive_parameter(value):
 
 def save_indexed_heatmap(fig, folder, p1, p2):
     """Save with P1 in photons/MeV and P2 in cm, without overwriting."""
+    folder.mkdir(parents=True, exist_ok=True)
     prefix = f"P1_{p1:g}_P2_{p2:g}_"
     index = 1
     while True:
@@ -158,9 +160,8 @@ def load_summary(path, events):
 
 
 def main():
-    root = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("csv", nargs="?", type=Path, default=root / "build" / "photons.csv")
+    parser.add_argument("csv", nargs="?", type=Path, default=OUTPUT_DATA / "photons.csv")
     parser.add_argument("--summary", type=Path, help="Summary CSV (default: beside photon CSV)")
     parser.add_argument("--run", type=int, help="Plot only this run ID")
     selection = parser.add_mutually_exclusive_group()
@@ -234,7 +235,7 @@ def main():
     fig.colorbar(im, ax=ax, label="Photon count")
 
     output = save_indexed_heatmap(
-        fig, root / "Heatmap_P1P2_plots", args.p1, args.p2)
+        fig, OUTPUT_DATA / "Heatmap_P1P2_plots", args.p1, args.p2)
     print(f"Read: {args.csv.resolve()}")
     print(f"Selection: {event_label} | Collected photons: {total}")
     print(f"Saved: {output.resolve()}")

@@ -17,5 +17,12 @@ add_executable(trigger
 
 target_include_directories(trigger PRIVATE include)
 target_link_libraries(trigger PRIVATE ${Geant4_LIBRARIES})
+target_compile_features(trigger PRIVATE cxx_std_17)
+target_compile_definitions(trigger PRIVATE
+    TRIGGER_OUTPUT_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Output_Data"
+)
+target_compile_definitions(trigger PRIVATE
+    TRIGGER_PROJECT_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
 file(COPY macros DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

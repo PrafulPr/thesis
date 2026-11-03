@@ -1,0 +1,9 @@
+
+/build/
+/Output_Data/
+/Heatmap_P1P2_plots/
+/experiment_data.csv
+__pycache__/
+*.py[cod]
+core
+core.*

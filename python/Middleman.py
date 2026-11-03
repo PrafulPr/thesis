@@ -1,20 +1,26 @@
 #!/usr/bin/env python3
-"""After simulation exit, merge the two Geant4 CSVs into an append-only dataset.
+"""Coordinate /scan commands, calculate event results, and save MOTHER.csv.
 
-One row per event/sensor; event results repeat across its 100 sensor rows.
-P1/P2 are read per event from the simulation summary (photons/MeV and cm).
+Raw CSVs are temporary inputs. Plot generation is disabled.
 """
 import argparse
 import csv
 import fcntl
 import hashlib
 import io
+import json
 import math
+import shutil
+import sys
 import uuid
 from datetime import datetime
 from pathlib import Path
+from types import SimpleNamespace
 
-BASE = Path(__file__).resolve().parent
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = SCRIPT_DIR.parent
+BASE = PROJECT_DIR / 'Output_Data'
+
 FIELDS = ['INDEX tag', 'experiment_id', 'experiment_time', 'input_sha256',
           'run_id', 'event_id', 'source_x_mm', 'source_y_mm', 'source_z_mm',
           'generated', 'absorbed', 'collected', 'sensor_id', 'sensor_x_mm',
@@ -165,6 +171,7 @@ def collect(args):
                                  energies_eV=values, sensor_energy_eV=total,
                                  sensor_x_mm=(s%10-4.5)*args.pitch_mm,
                                  sensor_y_mm=(s//10-4.5)*args.pitch_mm))
+    args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('a+', newline='') as destination:
         fcntl.flock(destination, fcntl.LOCK_EX)
         destination.seek(0)
@@ -191,18 +198,51 @@ def collect(args):
     print(f'INDEX tag: {common["INDEX tag"]}; experiment_id: {common["experiment_id"]}')
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--photons', type=Path, default=BASE/'build/photons.csv')
-    parser.add_argument('--summary', type=Path, default=BASE/'build/photon_summary.csv')
-    parser.add_argument('--output', type=Path, default=BASE/'experiment_data.csv')
-    parser.add_argument('--pitch-mm', type=positive, default=16, help='Sensor pitch; current geometry: 16 mm')
-    args = parser.parse_args()
-    try:
-        collect(args)
-    except (OSError, ValueError, KeyError, csv.Error) as error:
-        parser.exit(1, f'Error: {error}\n')
+
+def main(mode):
+    BASE.mkdir(parents=True, exist_ok=True)
+    if mode == 'begin':
+        archive = BASE / 'scan_archives' / datetime.now().strftime('%Y%m%d_%H%M%S_%f')
+        previous = [BASE / n for n in ('MOTHER.csv', 'plots', 'Heatmap_P1P2_plots', 'scan_manifest.json') if (BASE / n).exists()]
+        if previous:
+            archive.mkdir(parents=True)
+            for item in previous:
+                shutil.move(str(item), str(archive / item.name))
+            print(f'Previous results preserved in {archive}', flush=True)
+        with (BASE / 'MOTHER.csv').open('w', newline='') as f:
+            csv.DictWriter(f, fieldnames=FIELDS).writeheader()
+        for name in ('plots', 'Heatmap_P1P2_plots'):
+            folder = BASE / name
+            if folder.exists():
+                shutil.rmtree(folder)
+        macros = sorted((PROJECT_DIR / 'macros').rglob('*.mac'))
+        sources = list((PROJECT_DIR/'src').glob('*.cc')) + list((PROJECT_DIR/'include').glob('*.hh')) + macros
+        manifest = dict(started_at=datetime.now().astimezone().isoformat(),
+                        macros={str(p.relative_to(PROJECT_DIR)): p.read_text() for p in macros},
+                        source_sha256={str(p.relative_to(PROJECT_DIR)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources})
+        (BASE/'scan_manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+        print('New scan: fresh combined CSV created; previous results archived.', flush=True)
+    elif mode == 'save':
+        collect(SimpleNamespace(photons=BASE/'Collected_Data.csv',
+                                summary=BASE/'Real_Data.csv',
+                                output=BASE/'MOTHER.csv', pitch_mm=16))
+    elif mode == 'finish':
+        print('Scan complete. Dataset: ' + str(BASE/'MOTHER.csv'))
+        # C++ reopens these files after saveAndReset. Remove only empty
+        # staging files; retain any unsaved event data.
+        raw_paths = [BASE / 'Collected_Data.csv', BASE / 'Real_Data.csv']
+        for path in raw_paths:
+            if path.exists():
+                with path.open(newline='') as source:
+                    if next(csv.DictReader(source), None) is not None:
+                        raise ValueError(
+                            'Unsaved raw data retained. Call /scan/saveAndReset '
+                            'after the final /run/beamOn before /scan/finish.')
+        for path in raw_paths:
+            path.unlink(missing_ok=True)
+    else:
+        raise ValueError('Expected begin, save or finish')
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])

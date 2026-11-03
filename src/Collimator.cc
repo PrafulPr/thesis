@@ -19,7 +19,7 @@ void BuildCollimator(
     G4LogicalVolume* worldLogical,
     G4Box* crystalSolid
 )
-{   //Parameters:
+{   //Parameters  :  in my folder TRIGGER,
     const G4double thickness = 35*mm;
     const G4double holeWidth = 1.50*mm;
     const G4double septum = 0.20*mm;
@@ -29,7 +29,8 @@ void BuildCollimator(
 
     // Crystal is centered at z = 0.
     const G4double centreZ =
-        -crystalSolid->GetZHalfLength() - thickness/2;
+        -crystalSolid->GetZHalfLength() - 0.02*mm - thickness/2;
+        //-crystalSolid->GetZHalfLength() - thickness/2;  //PREV LINE - BEFORE ADJUSTMENT FOR OVERLAP
 
     auto lead =
         G4NistManager::Instance()->FindOrBuildMaterial("G4_Pb"); //material

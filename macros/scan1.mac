@@ -1,0 +1,50 @@
+/run/initialize
+/scan/begin
+/run/printProgress 1000
+
+/scan/setP1 800
+/scan/setP2 10 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 800
+/scan/setP2 30 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 800
+/scan/setP2 50 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 1000
+/scan/setP2 10 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 1000
+/scan/setP2 30 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 1000
+/scan/setP2 50 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 3000
+/scan/setP2 10 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 3000
+/scan/setP2 30 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/setP1 3000
+/scan/setP2 50 cm
+/run/beamOn 1000
+/scan/saveAndReset
+
+/scan/finish

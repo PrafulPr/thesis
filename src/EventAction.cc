@@ -15,14 +15,53 @@
 #include <cmath>
 //=====================================================
 
+//===== For mac-controls ==============================
+#include "G4GenericMessenger.hh"
+#include "G4StateManager.hh"
+#include <cstdlib>
+//=====================================================
+
 
 #include <iomanip>
+#include <filesystem>
+#include <string>
 
 #include "G4PrimaryVertex.hh"              //Added for REcording gamma launch coordinates
 
-EventAction::EventAction()
-    : fOutput("photons.csv"), fSummary("photon_summary.csv")
+namespace {
+std::string outputPath(const char* filename)
 {
+    const std::filesystem::path directory(TRIGGER_OUTPUT_DIR);
+    std::filesystem::create_directories(directory);
+    return (directory / filename).string();
+}
+}
+// 4 lines below replaced for mac-controls
+// EventAction::EventAction()
+//     : fOutput(outputPath("photons.csv")),
+//       fSummary(outputPath("photon_summary.csv"))
+// {
+EventAction::EventAction()
+{
+    OpenOutput();
+
+    fMessenger =
+        new G4GenericMessenger(this, "/scan/", "Scan output lifecycle");
+
+    fMessenger->DeclareMethod("begin", &EventAction::BeginScan)
+        .SetStates(G4State_Idle);
+
+    fMessenger->DeclareMethod("saveAndReset", &EventAction::SaveAndReset)
+        .SetStates(G4State_Idle);
+
+    fMessenger->DeclareMethod("finish", &EventAction::FinishScan)
+        .SetStates(G4State_Idle);
+}
+
+void EventAction::OpenOutput()
+{
+    fOutput.open(outputPath("Collected_Data.csv"), std::ios::trunc);
+    fSummary.open(outputPath("Real_Data.csv"), std::ios::trunc);
     if (!fOutput.is_open() || !fSummary.is_open())
     {
         G4Exception(
@@ -46,7 +85,98 @@ EventAction::EventAction()
     fOutput
         << "run_id,event_id,sensor_id,photon_count,energies_eV\n";
 }
+//======|||===|||=============================================================================================================|||===|||===|||
+EventAction::~EventAction()
+{
+    delete fMessenger;
+}
 
+void EventAction::RunAnalysis(const char* mode)
+{
+    const std::string command =
+        std::string("python3 \"") + TRIGGER_PROJECT_DIR
+        + "/python/Middleman.py\" " + mode;
+
+    if (std::system(command.c_str()) != 0)
+    {
+        G4Exception(
+            "RunAnalysis",
+            "ScanPipelineFailed",
+            FatalException,
+            "Collection/plotting failed; scan stopped. Temporary CSVs retained."
+        );
+    }
+}
+
+void EventAction::BeginScan()
+{
+    if (fScanActive)
+    {
+        G4Exception(
+            "BeginScan",
+            "ScanAlreadyActive",
+            FatalException,
+            "Scan already active"
+        );
+    }
+
+    RunAnalysis("begin");
+
+    fOutput.close();
+    fSummary.close();
+    OpenOutput();
+
+    fScanActive = true;
+}
+
+void EventAction::SaveAndReset()
+{
+    if (!fScanActive)
+    {
+        G4Exception(
+            "SaveAndReset",
+            "NoActiveScan",
+            FatalException,
+            "Call /scan/begin first"
+        );
+    }
+
+    fOutput.flush();
+    fSummary.flush();
+
+    if (!fOutput || !fSummary)
+    {
+        G4Exception(
+            "SaveAndReset",
+            "OutputFailed",
+            FatalException,
+            "Cannot flush output"
+        );
+    }
+
+    RunAnalysis("save");
+
+    fOutput.close();
+    fSummary.close();
+    OpenOutput();
+}
+
+void EventAction::FinishScan()
+{
+    if (!fScanActive)
+    {
+        G4Exception(
+            "FinishScan",
+            "NoActiveScan",
+            FatalException,
+            "Call /scan/begin first"
+        );
+    }
+
+    RunAnalysis("finish");
+    fScanActive = false;
+}
+//======|||===|||=============================================================================================================|||===|||===|||
 void EventAction::BeginOfEventAction(const G4Event*)
 {
     //FOR DATA COLLECTION:

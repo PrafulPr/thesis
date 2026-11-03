@@ -17,6 +17,64 @@
 #include "CrystalWrapping.hh"       //the Reflective Wrapping around the Crystal
 #include "Object.hh"                //lowkey self explanatory... its the object!! 
 
+//_________________________FOR MAC CONTROLS (WHOLE SECTION)__________________________________________||
+#include "G4GenericMessenger.hh"
+#include "G4StateManager.hh"
+#include "G4Exception.hh"
+#include <cmath>
+
+DetectorConstruction::DetectorConstruction()
+    : fMessenger(new G4GenericMessenger(this, "/scan/", "Parameter scan"))
+{
+    fMessenger->DeclareMethod("setP1", &DetectorConstruction::SetP1,
+        "Scintillation yield in photons/MeV").SetStates(G4State_Idle);
+
+    fMessenger->DeclareMethodWithUnit("setP2", "cm",
+        &DetectorConstruction::SetP2,
+        "Optical absorption length").SetStates(G4State_Idle);
+}
+
+DetectorConstruction::~DetectorConstruction()
+{
+    delete fMessenger;
+}
+
+void DetectorConstruction::SetP1(G4double value)
+{
+    if (!std::isfinite(value) || value <= 0)
+        G4Exception("SetP1", "InvalidP1", FatalException,
+                    "P1 must be finite and positive");
+
+    auto* material =
+        G4NistManager::Instance()->FindOrBuildMaterial("G4_CESIUM_IODIDE");
+
+    material->GetMaterialPropertiesTable()->AddConstProperty(
+        "SCINTILLATIONYIELD", value / MeV);
+}
+
+void DetectorConstruction::SetP2(G4double value)
+{
+    if (!std::isfinite(value) || value <= 0)
+        G4Exception("SetP2", "InvalidP2", FatalException,
+                    "P2 must be finite and positive");
+
+    auto* material =
+        G4NistManager::Instance()->FindOrBuildMaterial("G4_CESIUM_IODIDE");
+
+    auto* properties = material->GetMaterialPropertiesTable();
+
+    G4double energies[] = {2.0 * eV, 2.25 * eV, 2.5 * eV};
+    G4double lengths[] = {value, value, value};
+
+    properties->RemoveProperty("ABSLENGTH");
+    properties->AddProperty("ABSLENGTH", energies, lengths, 3);
+}
+
+//___________________________________________________________________________________________________||
+
+
+
+
 //SETTING THE WORLD 
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {
@@ -66,7 +124,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4double photonEnergy[]     = {2.0*eV, 2.25*eV, 2.5*eV};                     // \/  \/ RELATIVE INTENSITY NOT PROBABILITY \/  \/
     G4double emission[]         = {0.2, 1.0, 0.2};                               // Corresponding emission intensity at each energy
     G4double crystalIndex[]     = {1.79, 1.79, 1.79};                            // Refractive index at each energy
-    G4double absorptionLength[] = {5*m, 5*m, 5*m};                               // Mean distance before absorption
+    G4double absorptionLength[] = {100*cm, 100*cm, 100*cm};                               // Mean distance before absorption
     //                   examples we using: 5, 10, 20, 60, 100, ex: {60*m, 60*m, 60*m}; 
 
     auto crystalProperties = new G4MaterialPropertiesTable();
@@ -77,7 +135,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     crystalProperties->AddProperty("ABSLENGTH", photonEnergy, absorptionLength, 3);
 
     // Properties independent of photon energy
-    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 3000/MeV);        // Mean photons per MeV deposited  //54000 was example amount, we changed it to 54 for now| PROF=1000MeV
+    crystalProperties->AddConstProperty("SCINTILLATIONYIELD", 4000/MeV);        // Mean photons per MeV deposited  //54000 was example amount, we changed it to 54 for now| PROF=1000MeV
     //                                      examples we tryin: 100,300,1000,3000
     crystalProperties->AddConstProperty("SCINTILLATIONTIMECONSTANT1", 1000*ns);  // Emission decay time
     crystalProperties->AddConstProperty("SCINTILLATIONYIELD1", 1.0);             // Fraction in component 1: all light
@@ -95,7 +153,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     // Defining its Shape: a 2 cm cube (G4Box takes half-lengths)
     auto crystalSolid =
-        new G4Box("Crystal", 8*cm, 8*cm, 4*cm);
+        new G4Box("Crystal", 8*cm, 8*cm, 1*cm);           //====== FOR CHANGE IN DIM OF CRYSTAL ======//
         //so each dimension given here (say 1cm) extends it to that amount
         //so if you need a box of dimensions 2*2*2 then you give 1*cm, 1*cm, 1*cm 
 
