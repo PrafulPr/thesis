@@ -153,7 +153,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     // Defining its Shape: a 2 cm cube (G4Box takes half-lengths)
     auto crystalSolid =
-        new G4Box("Crystal", 8*cm, 8*cm, 1*cm);           //====== FOR CHANGE IN DIM OF CRYSTAL ======//
+        new G4Box("Crystal", 8*cm, 8*cm, 3*cm);           //====== FOR CHANGE IN DIM OF CRYSTAL ======//
         //so each dimension given here (say 1cm) extends it to that amount
         //so if you need a box of dimensions 2*2*2 then you give 1*cm, 1*cm, 1*cm 
 
